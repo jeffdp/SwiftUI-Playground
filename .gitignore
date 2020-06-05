@@ -1,0 +1,32 @@
+build
+*.pbxuser
+*.mode1v3
+*.xcworkspace
+xcuserdata
+!xcshareddata
+.DS_Store
+DerivedData
+/target
+appledoc/Output
+Pods
+.idea/*
+Gemfile.lock
+.bundle
+
+Classes/Strings.swift
+Classes/Images.swift
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# make target guards
+verify_xcode
+install_bundler
+install_gems
+setup
+ci_*
+
+# Apollo
+ApolloSupport
+node_modules
