@@ -17,9 +17,10 @@ class Mix: ObservableObject {
 
 struct ContentView: View {
     @ObservedObject private var mix = Mix()
+    @State private var showSheet = false
     
     private func getInfo() {
-        
+        showSheet.toggle()
     }
     
     var body: some View {
@@ -54,6 +55,7 @@ struct ContentView: View {
                 Image(systemName: "info.circle")
             })
         }
+        .sheet(isPresented: $showSheet) { InfoView() }
         .onAppear() {
             print("Appeared")
         }
@@ -61,6 +63,12 @@ struct ContentView: View {
 }
 
 PlaygroundPage.current.setLiveView(ContentView())
+
+struct InfoView: View {
+    var body: some View {
+        Text("Info View")
+    }
+}
 
 struct FormView: View {
     @State var name: String = ""
