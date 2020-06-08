@@ -1,7 +1,23 @@
 import SwiftUI
 import PlaygroundSupport
 
+class Mix: ObservableObject {
+    @Published var name: String
+    @Published var ingredients: [String]
+    
+    init(name: String, ingredients: [String]) {
+        self.name = name
+        self.ingredients = ingredients
+    }
+    
+    convenience init() {
+        self.init(name: "", ingredients: [])
+    }
+}
+
 struct ContentView: View {
+    @ObservedObject private var mix = Mix()
+    
     private func getInfo() {
         
     }
@@ -27,6 +43,10 @@ struct ContentView: View {
                 
                 NavigationLink(destination: ListView()) {
                     Text("List")
+                }
+                
+                NavigationLink(destination: BindingView(mix: mix)) {
+                    Text("Data Binding")
                 }
             }
             .navigationBarTitle("SwiftUI", displayMode: .inline)
@@ -230,5 +250,37 @@ struct ListView: View {
                 Text($0)
             }
         }
+    }
+}
+
+struct BindingView: View {
+    @ObservedObject private var mix: Mix
+    
+    init(mix: Mix) {
+        self.mix = mix
+    }
+    
+    func load() {
+        mix.name = "Rum and coke"
+        mix.ingredients = ["Rum", "Coke", "Ice"]
+    }
+    
+    var body: some View {
+        VStack {
+            Text(mix.name)
+            .font(.title)
+            .bordered()
+            .padding()
+            
+            List(mix.ingredients, id: \.self) { ingredient in
+                Text(ingredient)
+            }
+            
+            Button(action: load) {
+                Text("Load")
+            }
+            .padding()
+        }
+        .navigationBarTitle("Binding", displayMode: .inline)
     }
 }
